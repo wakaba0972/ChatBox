@@ -90,6 +90,10 @@
             window.scrollTo(0,document.body.scrollHeight);
         }
     })
+
+    ws.addEventListener('close', ()=> {
+        alert('連線中斷')
+    })
 </script>
 <script>
     setInterval(()=>{
