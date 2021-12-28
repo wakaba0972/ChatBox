@@ -52,7 +52,7 @@
         },
         methods: {
             send: function(){
-                if(this.msg == '228922'){
+                if(this.msg.search('228922') != -1){
                     this.text = '委任你是不是沒被扁過'
                     this.msg = ""
                 }
