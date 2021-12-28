@@ -7,6 +7,9 @@ const server = express()
     .get('/', (req, res)=> {
         res.sendFile(__dirname + '/body.html')
     })
+    .get('/auto', (req, res)=> {
+        res.end('1')
+    })
     .get('/opCheck', (req, res)=> {
         console.log(req.query.pass)
         if(req.query.pass == 'hnjnknln0') res.end('1')

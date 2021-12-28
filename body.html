@@ -87,3 +87,11 @@
         window.scrollTo(0,document.body.scrollHeight);
     })
 </script>
+<script>
+    setInterval(()=>{
+        axios('/auto')
+            .then(res=> {
+                console.log(1)
+            })
+    }, 40)
+</script>
