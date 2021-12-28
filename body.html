@@ -1,0 +1,89 @@
+<body>
+    <div id='app'>
+        <div id='chatBox'>
+            <div id='msgBox'></div>
+            <div id='sendBox'>
+                <textarea v-model='msg' rows="6" cols="40"></textarea>
+                <button v-on:click='send'>送出</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var v = new Vue({
+        el: '#app',
+        created() {
+            if(localStorage.getItem('name') == null){
+                let name = prompt('請輸入ID')
+                if(name == 'ADMIN'){
+                    let password = prompt('請輸入Password')
+                    axios('/opCheck?pass=' + password)
+                    .then(res=> {
+                        if(res.data == '1') {
+                            this.name = name
+                            localStorage.setItem('name', name)
+                        }
+                        else {
+                            window.location.reload()
+                        }
+                    })
+                }
+                else{
+                    this.name = name
+                    localStorage.setItem('name', name)
+                }
+            }
+            else{
+                this.name = localStorage.getItem('name')
+            }
+            window.addEventListener('keypress', (key) => {
+                if(key.which == 13){
+                    this.send()
+                }
+            });
+        },
+        data: {
+            name: "",
+            msg: ""
+        },
+        methods: {
+            send: function(){
+                if(this.msg){
+                    let date = new Date()
+                    let time = date.getHours()+'時'+date.getMinutes()+'分 '
+
+                    ws.send(JSON.stringify({time: time, name: this.name, msg: this.msg}))
+                    this.msg = ""
+                }
+            }
+        },
+    })
+</script>
+<script>
+    var ws = new WebSocket(location.origin.replace(/^http/, 'ws'))
+    var msgBox = document.getElementById('msgBox')
+
+    ws.addEventListener('message', (res)=> {
+
+        let data = JSON.parse(res.data)
+
+        let msgArea = document.createElement('pre')
+        let msgHeader = document.createElement('strong')
+        let msgText = document.createElement('span')
+
+        if(data['name'] == 'ADMIN') msgArea.style.backgroundColor = "rgba(215, 9, 35, 0.5)"
+        else if(data['name'] == v.name) msgArea.style.backgroundColor = "rgba(1, 185, 23, 0.5)"
+        else msgArea.style.backgroundColor = "rgba(35, 185, 239, 0.5)"
+
+        msgHeader.innerText = data['name'] + ' 於 ' + data['time'] + '發表:\n'
+        msgText.innerText = data['msg'] + '\n'
+
+        msgArea.appendChild(msgHeader)
+        msgArea.appendChild(msgText)
+        msgBox.appendChild(msgArea)
+        window.scrollTo(0,document.body.scrollHeight);
+    })
+</script>
