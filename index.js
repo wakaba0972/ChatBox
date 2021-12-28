@@ -1,6 +1,7 @@
 const express = require('express')
 const WebSocket = require('ws').Server
 
+const PORT = process.env.PORT || 3000;
 
 const server = express()
     .get('/', (req, res)=> {
@@ -11,7 +12,7 @@ const server = express()
         if(req.query.pass == 'hnjnknln0') res.end('1')
         else res.end('0')
     })
-    .listen(8000)
+    .listen(PORT, () => console.log(`Listening on ${PORT}`));
     
 
 const wsApp = new WebSocket({server})
