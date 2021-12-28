@@ -24,6 +24,13 @@ var nums = 0
 wsApp.on('connection', ws=> {
     console.log(++nums)
 
+    var a = JSON.stringify({name: 'server'})
+    setInterval(()=>{
+        wsApp.clients.forEach((client) => {
+            client.send(a);
+        })
+    }, 40000)
+
     ws.on('message', (msg)=> {
         msg = JSON.stringify(JSON.parse(msg))
         wsApp.clients.forEach((client) => {
