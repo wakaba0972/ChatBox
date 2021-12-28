@@ -4,7 +4,7 @@ const WebSocket = require('ws').Server
 
 const server = express()
     .get('/', (req, res)=> {
-        res.sendFile(__dirname + '\\body.html')
+        res.sendFile(__dirname + '/body.html')
     })
     .get('/opCheck', (req, res)=> {
         console.log(req.query.pass)
