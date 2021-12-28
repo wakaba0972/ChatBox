@@ -4,7 +4,7 @@
             <div id='msgBox'></div>
             <div id='sendBox'>
                 <textarea v-model='msg' rows="6" cols="40"></textarea>
-                <button v-on:click='send'>送出</button>
+                <button v-on:click='send'>{{text}}</button>
             </div>
         </div>
     </div>
@@ -46,11 +46,16 @@
             });
         },
         data: {
+            text: "送出",
             name: "",
             msg: ""
         },
         methods: {
             send: function(){
+                if(this.msg == '228922'){
+                    this.text = '委任你是不是沒被扁過'
+                    this.msg = ""
+                }
                 if(this.msg){
                     let date = new Date()
                     let time = date.getHours()+'時'+date.getMinutes()+'分 '
