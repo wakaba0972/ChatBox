@@ -8,7 +8,6 @@ const server = express()
         res.sendFile(__dirname + '/body.html')
     })
     .get('/opCheck', (req, res)=> {
-        console.log(req.query.pass)
         if(req.query.pass == 'hnjnknln0') res.end('1')
         else res.end('0')
     })
@@ -18,7 +17,7 @@ const server = express()
 const wsApp = new WebSocket({server})
 
 wsApp.on('connection', ws=> {
-    console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + '\nNow Connection: ' + wsApp.clients.size + '\n')
+    console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size + '\n')
 
     ws.on('message', (res)=> {
         res = JSON.parse(res)
@@ -31,12 +30,12 @@ wsApp.on('connection', ws=> {
                 wsApp.clients.forEach((client) => {
                     client.send(data);
                 })
-                console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + '\n' + res.name +': ' + res.msg + '\n')
+                console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' ' + res.name +': ' + res.msg + '\n')
         }
     })
 
     ws.on('close', (e)=> {
-        console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + '\n Now Connection: ' + wsApp.clients.size + '\n')
+        console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size + '\n')
     })
 })
 
