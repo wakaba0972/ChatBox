@@ -7,7 +7,7 @@
             <div id='chatBox'>
                 <div id='msgBox'></div>
                 <div id='sendBox'>
-                    <textarea v-model='msg' rows="6" cols="40"></textarea>
+                    <textarea v-model='msg' rows="6" cols="40" style="resize:none; white-space:nowrap;"></textarea>
                     <button v-on:click='send'>{{text}}</button>
                 </div>
             </div>
