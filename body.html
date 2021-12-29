@@ -1,116 +1,121 @@
-<body>
-    <div id='app'>
-        <div id='chatBox'>
-            <div id='msgBox'></div>
-            <div id='sendBox'>
-                <textarea v-model='msg' rows="6" cols="40"></textarea>
-                <button v-on:click='send'>{{text}}</button>
+<html>
+    <head>
+        <meta name=”viewport” content=”width=device-width”>
+    </head>
+    <body>
+        <div id='app'>
+            <div id='chatBox'>
+                <div id='msgBox'></div>
+                <div id='sendBox'>
+                    <textarea v-model='msg' rows="6" cols="40"></textarea>
+                    <button v-on:click='send'>{{text}}</button>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    var v = new Vue({
-        el: '#app',
-        created() {
-            if(localStorage.getItem('name') == null){
-                let name = prompt('請輸入ID')
-                if(name == 'ADMIN'){
-                    let password = prompt('請輸入Password')
-                    axios('/opCheck?pass=' + password)
-                    .then(res=> {
-                        if(res.data == '1') {
-                            this.name = name
-                            localStorage.setItem('name', name)
-                        }
-                        else {
-                            window.location.reload()
-                        }
-                    })
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var v = new Vue({
+            el: '#app',
+            created() {
+                if(localStorage.getItem('name') == null){
+                    let name = prompt('請輸入ID')
+                    if(name == 'ADMIN'){
+                        let password = prompt('請輸入Password')
+                        axios('/opCheck?pass=' + password)
+                        .then(res=> {
+                            if(res.data == '1') {
+                                this.name = name
+                                localStorage.setItem('name', name)
+                            }
+                            else {
+                                window.location.reload()
+                            }
+                        })
+                    }
+                    else{
+                        this.name = name
+                        localStorage.setItem('name', name)
+                    }
                 }
                 else{
-                    this.name = name
-                    localStorage.setItem('name', name)
+                    this.name = localStorage.getItem('name')
                 }
+                window.addEventListener('keypress', (key) => {
+                    if(key.which == 13){
+                        this.send()
+                    }
+                });
+            },
+            data: {
+                text: "送出",
+                name: "",
+                msg: ""
+            },
+            methods: {
+                send: function(){
+                    if(this.msg.search('228922') != -1){
+                        this.text = '委任你是不是沒被扁過'
+                        this.msg = ""
+                    }
+                    if(this.msg){
+                        let date = new Date()
+                        let time = date.getHours()+'時'+date.getMinutes()+'分 '
+
+                        ws.send(JSON.stringify({command: "message", time: time, name: this.name, msg: this.msg}))
+                        this.msg = ""
+                    }
+                }
+            },
+        })
+    </script>
+    <script>
+        var ws = new WebSocket(location.origin.replace(/^http/, 'ws'))
+        var msgBox = document.getElementById('msgBox')
+
+        ws.addEventListener('message', (res)=> {
+            let data = JSON.parse(res.data)
+
+            switch(data.command){
+                case "regular":
+                    break
+                case "message":
+                    let msgArea = document.createElement('pre')
+                    let msgHeader = document.createElement('strong')
+                    let msgText = document.createElement('span')
+
+                    switch(data.name){
+                        case "ADMIN":
+                            msgArea.style.backgroundColor = "rgba(215, 9, 35, 0.5)"
+                            break
+                        case this.name:
+                            msgArea.style.backgroundColor = "rgba(1, 185, 23, 0.5)"
+                            break
+                        default:
+                            msgArea.style.backgroundColor = "rgba(35, 185, 239, 0.5)"
+                            break
+                    }
+                    msgHeader.innerText = data['name'] + ' 於 ' + data['time'] + '發表:\n'
+                    msgText.innerText = data['msg'] + '\n'
+
+                    msgArea.appendChild(msgHeader)
+                    msgArea.appendChild(msgText)
+                    msgBox.appendChild(msgArea)
+                    window.scrollTo(0,document.body.scrollHeight);
+                    break
+
             }
-            else{
-                this.name = localStorage.getItem('name')
-            }
-            window.addEventListener('keypress', (key) => {
-                if(key.which == 13){
-                    this.send()
-                }
-            });
-        },
-        data: {
-            text: "送出",
-            name: "",
-            msg: ""
-        },
-        methods: {
-            send: function(){
-                if(this.msg.search('228922') != -1){
-                    this.text = '委任你是不是沒被扁過'
-                    this.msg = ""
-                }
-                if(this.msg){
-                    let date = new Date()
-                    let time = date.getHours()+'時'+date.getMinutes()+'分 '
+        })
 
-                    ws.send(JSON.stringify({command: "message", time: time, name: this.name, msg: this.msg}))
-                    this.msg = ""
-                }
-            }
-        },
-    })
-</script>
-<script>
-    var ws = new WebSocket(location.origin.replace(/^http/, 'ws'))
-    var msgBox = document.getElementById('msgBox')
-
-    ws.addEventListener('message', (res)=> {
-        let data = JSON.parse(res.data)
-
-        switch(data.command){
-            case "regular":
-                break
-            case "message":
-                let msgArea = document.createElement('pre')
-                let msgHeader = document.createElement('strong')
-                let msgText = document.createElement('span')
-
-                switch(data.name){
-                    case "ADMIN":
-                        msgArea.style.backgroundColor = "rgba(215, 9, 35, 0.5)"
-                        break
-                    case this.name:
-                        msgArea.style.backgroundColor = "rgba(1, 185, 23, 0.5)"
-                        break
-                    default:
-                        msgArea.style.backgroundColor = "rgba(35, 185, 239, 0.5)"
-                        break
-                }
-                msgHeader.innerText = data['name'] + ' 於 ' + data['time'] + '發表:\n'
-                msgText.innerText = data['msg'] + '\n'
-
-                msgArea.appendChild(msgHeader)
-                msgArea.appendChild(msgText)
-                msgBox.appendChild(msgArea)
-                window.scrollTo(0,document.body.scrollHeight);
-                break
-
-        }
-    })
-
-    ws.addEventListener('close', ()=> {
-        alert('連線中斷')
-    })
-</script>
-<script>
-    setInterval(()=>{
-        ws.send(JSON.stringify({command: "regular"}))
-    }, 40000)
-</script>
+        ws.addEventListener('close', ()=> {
+            alert('連線中斷')
+        })
+    </script>
+    <script>
+        setInterval(()=>{
+            ws.send(JSON.stringify({command: "regular"}))
+        }, 40000)
+    </script>
+</html>
