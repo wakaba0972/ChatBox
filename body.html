@@ -60,7 +60,7 @@
                     let date = new Date()
                     let time = date.getHours()+'時'+date.getMinutes()+'分 '
 
-                    ws.send(JSON.stringify({time: time, name: this.name, msg: this.msg}))
+                    ws.send(JSON.stringify({command: "message", time: time, name: this.name, msg: this.msg}))
                     this.msg = ""
                 }
             }
@@ -72,27 +72,37 @@
     var msgBox = document.getElementById('msgBox')
 
     ws.addEventListener('message', (res)=> {
-
         let data = JSON.parse(res.data)
-        if(data['name'] == 'server'){
-            console.log('2')
-        }
-        else{
-            let msgArea = document.createElement('pre')
-            let msgHeader = document.createElement('strong')
-            let msgText = document.createElement('span')
 
-            if(data['name'] == 'ADMIN') msgArea.style.backgroundColor = "rgba(215, 9, 35, 0.5)"
-            else if(data['name'] == v.name) msgArea.style.backgroundColor = "rgba(1, 185, 23, 0.5)"
-            else msgArea.style.backgroundColor = "rgba(35, 185, 239, 0.5)"
+        switch(data.command){
+            case "regular":
+                console.log(1)
+                break
+            case "message":
+                let msgArea = document.createElement('pre')
+                let msgHeader = document.createElement('strong')
+                let msgText = document.createElement('span')
 
-            msgHeader.innerText = data['name'] + ' 於 ' + data['time'] + '發表:\n'
-            msgText.innerText = data['msg'] + '\n'
+                switch(data.name){
+                    case "ADMIN":
+                        msgArea.style.backgroundColor = "rgba(215, 9, 35, 0.5)"
+                        break
+                    case this.name:
+                        msgArea.style.backgroundColor = "rgba(1, 185, 23, 0.5)"
+                        break
+                    default:
+                        msgArea.style.backgroundColor = "rgba(35, 185, 239, 0.5)"
+                        break
+                }
+                msgHeader.innerText = data['name'] + ' 於 ' + data['time'] + '發表:\n'
+                msgText.innerText = data['msg'] + '\n'
 
-            msgArea.appendChild(msgHeader)
-            msgArea.appendChild(msgText)
-            msgBox.appendChild(msgArea)
-            window.scrollTo(0,document.body.scrollHeight);
+                msgArea.appendChild(msgHeader)
+                msgArea.appendChild(msgText)
+                msgBox.appendChild(msgArea)
+                window.scrollTo(0,document.body.scrollHeight);
+                break
+
         }
     })
 
@@ -102,9 +112,6 @@
 </script>
 <script>
     setInterval(()=>{
-        axios('/auto')
-            .then(res=> {
-                console.log(1)
-            })
+        ws.send(JSON.stringify({command: "regular"}))
     }, 40000)
 </script>

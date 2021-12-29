@@ -7,9 +7,6 @@ const server = express()
     .get('/', (req, res)=> {
         res.sendFile(__dirname + '/body.html')
     })
-    .get('/auto', (req, res)=> {
-        res.end('1')
-    })
     .get('/opCheck', (req, res)=> {
         console.log(req.query.pass)
         if(req.query.pass == 'hnjnknln0') res.end('1')
@@ -24,18 +21,26 @@ var nums = 0
 wsApp.on('connection', ws=> {
     console.log(++nums)
 
-    var a = JSON.stringify({name: 'server'})
+    var a = JSON.stringify({command: "regular"})
     setInterval(()=>{
         wsApp.clients.forEach((client) => {
             client.send(a);
         })
     }, 40000)
 
-    ws.on('message', (msg)=> {
-        msg = JSON.stringify(JSON.parse(msg))
-        wsApp.clients.forEach((client) => {
-            client.send(msg);
-        })
+    ws.on('message', (res)=> {
+        res = JSON.parse(res)
+
+        switch(res.command){
+            case "regular":
+                console.log(1)
+                break
+            case "message":
+                let data = JSON.stringify(res)
+                wsApp.clients.forEach((client) => {
+                    client.send(data);
+                })
+        }
     })
 
     ws.on('close', (e)=> {
