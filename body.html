@@ -7,7 +7,7 @@
             <div id='chatBox'>
                 <div id='msgBox'></div>
                 <div id='sendBox'>
-                    <textarea v-model='msg' rows="6" cols="40" onkeydown="if (event.keyCode === 13) event.preventDefault();"></textarea>
+                    <textarea v-model='msg' rows="6" cols="40"></textarea>
                     <button v-on:click='send'>{{text}}</button>
                 </div>
             </div>
