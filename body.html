@@ -91,10 +91,10 @@
                             msgArea.setAttribute('class', 'admin')
                             break
                         case v.name:
-                            msgArea.style.setAttribute('class', 'me')
+                            msgArea.setAttribute('class', 'me')
                             break
                         default:
-                            msgArea.style.setAttribute('class', 'others')
+                            msgArea.setAttribute('class', 'others')
                             break
                     }
                     msgHeader.innerText = data['name'] + ' 於 ' + data['time'] + '發表:\n'
@@ -110,7 +110,7 @@
         })
 
         ws.addEventListener('close', ()=> {
-            alert('連線中斷')
+            if(confirm('連線中斷')) window.location.reload()
         })
     </script>
     <script>
@@ -121,13 +121,13 @@
 
     <style>
         .admin {
-            background-color: "rgba(215, 9, 35, 0.5)";
+            background-color: rgba(215, 9, 35, 0.5);
         }
         .me {
-            background-color: "rgba(1, 185, 23, 0.5)";
+            background-color: rgba(1, 185, 23, 0.5);
         }
         .others {
-            background-color: "rgba(35, 185, 239, 0.5)";
+            background-color: rgba(35, 185, 239, 0.5);
         }
         textarea {
             resize: none; 
