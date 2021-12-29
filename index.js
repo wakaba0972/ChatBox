@@ -17,7 +17,7 @@ const server = express()
 const wsApp = new WebSocket({server})
 
 wsApp.on('connection', ws=> {
-    console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size + '\n')
+    console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
 
     ws.on('message', (res)=> {
         res = JSON.parse(res)
@@ -30,12 +30,12 @@ wsApp.on('connection', ws=> {
                 wsApp.clients.forEach((client) => {
                     client.send(data);
                 })
-                console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' ' + res.name +': ' + res.msg + '\n')
+                console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' ' + res.name +': ' + res.msg)
         }
     })
 
     ws.on('close', (e)=> {
-        console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size + '\n')
+        console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
     })
 })
 
