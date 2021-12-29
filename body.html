@@ -5,7 +5,7 @@
     <body>
         <div id='app'>
             <div id='chatBox'>
-                <div id='msgBox'></div>
+                <div id='msgBox' style="overflow-y: scroll;height:800px;"></div>
                 <div id='sendBox'>
                     <textarea v-model='msg' rows="6" cols="40" onkeydown="if(event.keyCode==13){event.preventDefault(); v.send()}"></textarea>
                     <button v-on:click='send'>{{text}}</button>
@@ -106,7 +106,7 @@
                     msgArea.appendChild(msgHeader)
                     msgArea.appendChild(msgText)
                     msgBox.appendChild(msgArea)
-                    window.scrollTo(0,document.body.scrollHeight);
+                    msgBox.scrollTo(0,document.body.scrollHeight);
                     break
 
             }
