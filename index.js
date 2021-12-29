@@ -17,23 +17,14 @@ const server = express()
 
 const wsApp = new WebSocket({server})
 
-var nums = 0
 wsApp.on('connection', ws=> {
-    console.log(++nums)
-
-    var a = JSON.stringify({command: "regular"})
-    setInterval(()=>{
-        wsApp.clients.forEach((client) => {
-            client.send(a);
-        })
-    }, 40000)
+    console.log(wsApp.clients.size)
 
     ws.on('message', (res)=> {
         res = JSON.parse(res)
 
         switch(res.command){
             case "regular":
-                console.log(1)
                 break
             case "message":
                 let data = JSON.stringify(res)
@@ -44,6 +35,13 @@ wsApp.on('connection', ws=> {
     })
 
     ws.on('close', (e)=> {
-        console.log(--nums)
+        console.log(wsApp.clients.size)
     })
 })
+
+var a = JSON.stringify({command: "regular"})
+setInterval(()=>{
+    wsApp.clients.forEach((client) => {
+        client.send(a);
+    })
+}, 40000)
