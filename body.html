@@ -106,12 +106,12 @@
                     msgArea.appendChild(msgHeader)
                     msgArea.appendChild(msgText)
                     msgBox.appendChild(msgArea)
-                    msgBox.scrollTo(0,document.body.scrollHeight);
+                    msgBox.scrollTo(0, msgBox.scrollHeight);
                     break
 
             }
         })
-
+        
         ws.addEventListener('close', ()=> {
             if(confirm('連線中斷')) window.location.reload()
         })
