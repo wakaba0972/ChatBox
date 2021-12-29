@@ -72,7 +72,7 @@
         })
     </script>
     <script>
-        var ws = new WebSocket(location.origin.replace(/^http/, 'ws'))
+        var ws = new WebSocket(location.origin.replace(/^http/, 'ws'))  
         var msgBox = document.getElementById('msgBox')
 
         ws.addEventListener('message', (res)=> {
@@ -80,6 +80,9 @@
 
             switch(data.command){
                 case "regular":
+                    break
+                case "connect":
+                    document.title = "在線人數: " + data.nums
                     break
                 case "message":
                     let msgArea = document.createElement('pre')

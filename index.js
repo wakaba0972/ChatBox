@@ -18,6 +18,10 @@ const wsApp = new WebSocket({server})
 
 wsApp.on('connection', ws=> {
     console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
+    
+    wsApp.clients.forEach((client) => {
+        client.send(JSON.stringify({command: "connect", nums: wsApp.clients.size}));
+    })
 
     ws.on('message', (res)=> {
         res = JSON.parse(res)
@@ -35,6 +39,9 @@ wsApp.on('connection', ws=> {
     })
 
     ws.on('close', (e)=> {
+        wsApp.clients.forEach((client) => {
+            client.send(JSON.stringify({command: "connect", nums: wsApp.clients.size}));
+        })
         console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
     })
 })
