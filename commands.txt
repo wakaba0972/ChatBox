@@ -8,4 +8,4 @@ message => time, name, msg
 number => nums
 
 #發送用戶名
-header => name
+connect => name

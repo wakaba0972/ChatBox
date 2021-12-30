@@ -3,7 +3,7 @@ var msgBox = document.getElementById('msgBox')
 var ws = new WebSocket(location.origin.replace(/^http/, 'ws'))
 
 ws.onopen = function(){
-    ws.send(JSON.stringify({command: "header", name: v.name}))
+    ws.send(JSON.stringify({command: "connect", name: v.name}))
 }
 
 ws.addEventListener('message', (res)=> {
@@ -12,18 +12,14 @@ ws.addEventListener('message', (res)=> {
     switch(data.command){
         case "regular":
             break
-        case "connect":
-            document.title = "在線人數: " + data.nums
-            break
+        case "connection":
+            document.title = "在線人數: " + data.num
         case "message":
             let msgArea = document.createElement('pre')
             let msgHeader = document.createElement('strong')
             let msgText = document.createElement('span')
 
             switch(data.name){
-                case "ADMIN":
-                    msgArea.setAttribute('class', 'admin')
-                    break
                 case "BOT":
                     msgArea.setAttribute('class', 'bot')
                     break
@@ -42,7 +38,6 @@ ws.addEventListener('message', (res)=> {
             msgBox.appendChild(msgArea)
             msgBox.scrollTo(0, msgBox.scrollHeight);
             break
-
     }
 })
 

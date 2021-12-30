@@ -1,25 +1,11 @@
+
 var v = new Vue({
     el: '#app',
     created() {
         if(localStorage.getItem('name') == null){
             let name = prompt('請輸入ID')
-            if(name == 'ADMIN'){
-                let password = prompt('請輸入Password')
-                axios('/opCheck?pass=' + password)
-                .then(res=> {
-                    if(res.data == '1') {
-                        this.name = name
-                        localStorage.setItem('name', name)
-                    }
-                    else {
-                        window.location.reload()
-                    }
-                })
-            }
-            else{
-                this.name = name
-                localStorage.setItem('name', name)
-            }
+            localStorage.setItem('name', name)
+            this.name = name
         }
         else{
             this.name = localStorage.getItem('name')
@@ -51,4 +37,3 @@ var v = new Vue({
         }
     },
 })
-

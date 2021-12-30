@@ -8,9 +8,8 @@ const server = express()
     .get('/', (req, res)=> {
         res.sendFile(__dirname + '/body.html')
     })
-    .get('/opCheck', (req, res)=> {
-        if(req.query.pass == 'hnjnknln0') res.end('1')
-        else res.end('0')
+    .get('/connect', (req, res)=> {
+
     })
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
     
@@ -19,10 +18,6 @@ const wsApp = new WebSocket({server})
 
 wsApp.on('connection', ws=> {
     console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
-    
-    wsApp.clients.forEach((client) => {
-        client.send(JSON.stringify({command: "number", nums: wsApp.clients.size}));
-    })
 
     ws.on('message', (res)=> {
         res = JSON.parse(res)
@@ -30,11 +25,12 @@ wsApp.on('connection', ws=> {
         switch(res.command){
             case "regular":
                 break
-            case "header":
+            case "connect":
+                ws.name = res.name
                 let date = new Date()
                 let time = date.getHours()+'時'+date.getMinutes()+'分 '
                 wsApp.clients.forEach((client) => {
-                    client.send(JSON.stringify({command: "message", time: time, name: "BOT", msg: res.name + "君 進入聊天室"}));
+                    client.send(JSON.stringify({command: "connection", time: time, name: "BOT", num: wsApp.clients.size, msg: ws.name + "君 進入聊天室"}));
                 })
                 break
             case "message":
@@ -48,8 +44,10 @@ wsApp.on('connection', ws=> {
     })
 
     ws.on('close', (e)=> {
+        let date = new Date()
+        let time = date.getHours()+'時'+date.getMinutes()+'分 '
         wsApp.clients.forEach((client) => {
-            client.send(JSON.stringify({command: "number", nums: wsApp.clients.size}));
+            client.send(JSON.stringify({command: "connection", time: time, name: "BOT", num: wsApp.clients.size, msg: ws.name + "君 離開聊天室"}))
         })
         console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
     })
