@@ -1,0 +1,11 @@
+#定期發送封包避免斷線
+regular => void
+
+#發送聊天訊息
+message => time, name, msg
+
+#發送在線人數
+number => nums
+
+#發送用戶名
+header => name

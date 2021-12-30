@@ -4,6 +4,7 @@ const WebSocket = require('ws').Server
 const PORT = process.env.PORT || 3000;
 
 const server = express()
+    .use(express.static('public'))
     .get('/', (req, res)=> {
         res.sendFile(__dirname + '/body.html')
     })
@@ -20,7 +21,7 @@ wsApp.on('connection', ws=> {
     console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
     
     wsApp.clients.forEach((client) => {
-        client.send(JSON.stringify({command: "connect", nums: wsApp.clients.size}));
+        client.send(JSON.stringify({command: "number", nums: wsApp.clients.size}));
     })
 
     ws.on('message', (res)=> {
@@ -29,18 +30,26 @@ wsApp.on('connection', ws=> {
         switch(res.command){
             case "regular":
                 break
+            case "header":
+                let date = new Date()
+                let time = date.getHours()+'時'+date.getMinutes()+'分 '
+                wsApp.clients.forEach((client) => {
+                    client.send(JSON.stringify({command: "message", time: time, name: "BOT", msg: res.name + "君 進入聊天室"}));
+                })
+                break
             case "message":
                 let data = JSON.stringify(res)
                 wsApp.clients.forEach((client) => {
                     client.send(data);
                 })
                 console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' ' + res.name +': ' + res.msg)
+                break
         }
     })
 
     ws.on('close', (e)=> {
         wsApp.clients.forEach((client) => {
-            client.send(JSON.stringify({command: "connect", nums: wsApp.clients.size}));
+            client.send(JSON.stringify({command: "number", nums: wsApp.clients.size}));
         })
         console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' Connection: ' + wsApp.clients.size)
     })
