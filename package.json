@@ -1,7 +1,7 @@
 {
   "name": "new222",
   "version": "1.0.0",
-  "description": "",
+  "description": "A cool application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
