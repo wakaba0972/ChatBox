@@ -1,3 +1,4 @@
+const ip = require("ip");
 const express = require('express')
 const WebSocket = require('ws').Server
 
@@ -11,7 +12,7 @@ const server = express()
     .get('/connect', (req, res)=> {
 
     })
-    .listen(PORT, () => console.log(`Listening on ${PORT}`));
+    .listen(PORT, () => console.log('Listening on ' + ip.address() + ':' + PORT));
     
 
 const wsApp = new WebSocket({server})
