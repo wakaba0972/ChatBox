@@ -2,25 +2,28 @@
     font-size: 15px;
     padding: 10px 10px;
     border-radius: 25px;
-    background-color: rgba(215, 9, 35, 0.5);
+    background-color: rgb(250, 46, 46);
 }
 .bot {
     font-size: 15px;
     padding: 10px 10px;
     border-radius: 25px;
-    background-color: rgba(130, 130, 130, 0.5);
+    background-color: rgb(193, 193, 193);
 }
 .me {
     font-size: 15px;
     padding: 10px 10px;
     border-radius: 25px;
-    background-color: rgba(1, 185, 23, 0.5);
+    background-color: rgb(129, 221, 141);
 }
 .others {
     font-size: 15px;
     padding: 10px 10px;
     border-radius: 25px;
-    background-color: rgba(35, 185, 239, 0.5);
+    background-color: rgb(147, 220, 246);
+}
+pre {
+    position: relative;
 }
 span {
     word-wrap: break-word;

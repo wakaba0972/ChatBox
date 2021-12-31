@@ -17,6 +17,7 @@ var v = new Vue({
         });
     },
     data: {
+        haveStar: false,
         text: "送出",
         name: "",
         msg: "",
@@ -31,10 +32,15 @@ var v = new Vue({
             if(this.msg && !this.msg.match(/^\s+$/)){
                 let date = new Date()
                 let time = date.getHours()+'時'+date.getMinutes()+'分 '
-                console.log(this.id)
                 ws.send(JSON.stringify({command: "message", time: time, id: this.id, name: this.name, msg: this.msg}))
                 this.msg = ""
             }
         },
+        star: function(){
+            if(!this.haveStar){
+                this.haveStar = true
+                document.getElementById('bg').src = '/star.gif'
+            }
+        }
     },
 })
