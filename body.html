@@ -6,10 +6,12 @@
     <body>
         <div id='app'>
             <div id='chatBox'>
-                <div id='msgBox' style="overflow-y: scroll;height: 85%"></div>
+                <div id='msgBox' style="overflow-y: scroll;height: 85%;"></div>
                 <div id='sendBox'>
                     <textarea v-model='msg' rows="6" cols="40" onkeydown="if(event.keyCode==13){event.preventDefault(); v.send()}"></textarea>
                     <button v-on:click='send'>{{text}}</button>
+                    <button >星爆</button>
+                    <button >恭喜</button>
                 </div>
             </div>
         </div>

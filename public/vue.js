@@ -3,7 +3,7 @@ var v = new Vue({
     el: '#app',
     created() {
         if(localStorage.getItem('name') == null){
-            let name = prompt('請輸入ID')
+            let name = prompt('請輸入暱稱')
             localStorage.setItem('name', name)
             this.name = name
         }
@@ -19,7 +19,8 @@ var v = new Vue({
     data: {
         text: "送出",
         name: "",
-        msg: ""
+        msg: "",
+        id: ""
     },
     methods: {
         send: function(){
@@ -30,8 +31,8 @@ var v = new Vue({
             if(this.msg && !this.msg.match(/^\s+$/)){
                 let date = new Date()
                 let time = date.getHours()+'時'+date.getMinutes()+'分 '
-
-                ws.send(JSON.stringify({command: "message", time: time, name: this.name, msg: this.msg}))
+                console.log(this.id)
+                ws.send(JSON.stringify({command: "message", time: time, id: this.id, name: this.name, msg: this.msg}))
                 this.msg = ""
             }
         }

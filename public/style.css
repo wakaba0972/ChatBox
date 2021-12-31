@@ -1,19 +1,36 @@
 .admin {
+    font-size: 15px;
+    padding: 10px 10px;
+    border-radius: 25px;
     background-color: rgba(215, 9, 35, 0.5);
 }
 .bot {
+    font-size: 15px;
+    padding: 10px 10px;
+    border-radius: 25px;
     background-color: rgba(130, 130, 130, 0.5);
 }
 .me {
+    font-size: 15px;
+    padding: 10px 10px;
+    border-radius: 25px;
     background-color: rgba(1, 185, 23, 0.5);
 }
 .others {
+    font-size: 15px;
+    padding: 10px 10px;
+    border-radius: 25px;
     background-color: rgba(35, 185, 239, 0.5);
+}
+span {
+    word-wrap: break-word;
+    white-space: initial;
 }
 textarea {
     resize: none; 
 }
 button {
-    width: 140px;
-    height: 50px;
+    height: 10%;
+    width: 10%;
+    border-radius: 100px
 }
