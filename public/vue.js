@@ -17,7 +17,6 @@ var v = new Vue({
         });
     },
     data: {
-        haveStar: false,
         text: "送出",
         name: "",
         msg: "",
@@ -37,10 +36,7 @@ var v = new Vue({
             }
         },
         star: function(){
-            if(!this.haveStar){
-                this.haveStar = true
-                document.getElementById('bg').src = '/star.gif'
-            }
+            document.getElementById('bg').style['opacity'] = '0.5'
         }
     },
 })
