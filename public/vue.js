@@ -1,4 +1,3 @@
-
 var v = new Vue({
     el: '#app',
     created() {
@@ -17,6 +16,7 @@ var v = new Vue({
         });
     },
     data: {
+        hasStar: true,
         text: "送出",
         name: "",
         msg: "",
@@ -36,7 +36,14 @@ var v = new Vue({
             }
         },
         star: function(){
-            document.getElementById('bg').style['opacity'] = '0.5'
+            if(this.hasStar){
+                document.getElementById('bg').style['opacity'] = '0.7'
+                this.hasStar = false
+            }
+            else{
+                document.getElementById('bg').style['opacity'] = '0'
+                this.hasStar = true
+            }
         }
     },
 })
