@@ -35,6 +35,6 @@ var v = new Vue({
                 ws.send(JSON.stringify({command: "message", time: time, id: this.id, name: this.name, msg: this.msg}))
                 this.msg = ""
             }
-        }
+        },
     },
 })
