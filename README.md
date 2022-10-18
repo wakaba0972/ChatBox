@@ -6,4 +6,4 @@ ws -> 8.9.0
 
 ## Building
  + Set up the Node development environment
- + install ```express``` ```ws``` ```pkg```\```npm install express ws pkg```
+ + Install ```express``` ```ws``` ```pkg```__```npm install express ws pkg```
