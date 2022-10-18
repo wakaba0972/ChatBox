@@ -1,19 +1,19 @@
-const ip = require("ip");
 const express = require('express')
 const WebSocket = require('ws').Server
 
 const PORT = process.env.PORT || 3000;
 
 const server = express()
-    .use(express.static('public'))
+    .use(express.static(process.cwd() + '/view'))
+    .use(express.static(process.cwd() + '/build'))
     .get('/', (req, res)=> {
-        res.sendFile(__dirname + '/body.html')
+        res.sendFile(process.cwd() + '/view/body.html')
     })
     .get('/connect', (req, res)=> {
 
     })
-    .listen(PORT, () => console.log('Listening on ' + ip.address() + ':' + PORT));
-    
+    .listen(PORT, () => console.log('Listening on ' + 'PORT ' + PORT + 
+        "\nTo check your local IP Address please type ipconfig(Windows) or ifconfig(Linux, Mac) command in your terminal"));
 var clientList = {}
 
 const wsApp = new WebSocket({server})
@@ -56,7 +56,7 @@ wsApp.on('connection', ws=> {
                         client.send(data_for_others)
                     }
                 })
-                console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + ' ' + res.name +': ' + res.msg)
+                console.log(new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}) + '-> ' + res.name +': ' + res.msg)
                 break
         }
     })
