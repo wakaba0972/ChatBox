@@ -19,10 +19,10 @@
   },
   "pkg": {
     "scripts": [
-      "./build/*.js"
+      "./scripts/*.js"
     ],
     "assets": [
-      "./view/*"
+      "./views/*"
     ]
   }
 }

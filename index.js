@@ -4,10 +4,10 @@ const WebSocket = require('ws').Server
 const PORT = process.env.PORT || 3000;
 
 const server = express()
-    .use(express.static(process.cwd() + '/view'))
-    .use(express.static(process.cwd() + '/build'))
+    .use(express.static(process.cwd() + '/views'))
+    .use(express.static(process.cwd() + '/scripts'))
     .get('/', (req, res)=> {
-        res.sendFile(process.cwd() + '/view/body.html')
+        res.sendFile(process.cwd() + '/views/body.html')
     })
     .get('/connect', (req, res)=> {
 
