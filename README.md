@@ -1,2 +1,3 @@
-# A simple LAN Chat Room 
-================================
+# Let's Chat On LAN!!!
+
+# Requests
