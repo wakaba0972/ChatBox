@@ -4,4 +4,4 @@
 ## Building
  + Set up the Node development environment
  + Use the command below to install ```express``` ```ws``` ```pkg``` modules <br/>```npm install express ws pkg```
- + Use the ```pkg``` command to package the project into an executable file <br/> ```pkg index.js```
+ + Use ```pkg``` command to package the project into an executable file <br/> ```pkg index.js```
