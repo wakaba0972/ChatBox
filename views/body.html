@@ -7,7 +7,7 @@
         <img id='bg' src="./6tEkGBP.gif" style="position: absolute; height: 100%; width: 100%; opacity: 0;">
         <div id='app' style="position: relative;">
             <div id='chatBox'>
-                <div id='msgBox' style="overflow-y: auto; height: 85%"></div>
+                <div id='msgBox' style="overflow-y: scroll; height: 85%"></div>
                 <div id='sendBox'>
                     <textarea v-model='msg' rows="8" cols="40" onkeydown="if(event.keyCode==13){event.preventDefault(); v.send()}"></textarea>
                 </div>

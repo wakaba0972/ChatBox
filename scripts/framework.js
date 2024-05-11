@@ -10,8 +10,6 @@ var v = new Vue({
             this.name = localStorage.getItem('name')
         }
 
-        if(this.name == null) this.name = "user" + Number(Math.random().toString() + Date.now()).toString(16).substr(2)
-
         window.addEventListener('keypress', (key) => {
             if(key.which == 13){
                 this.send()
