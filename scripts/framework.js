@@ -1,7 +1,7 @@
 var v = new Vue({
     el: '#app',
     created() {
-        if(localStorage.getItem('name') == null){
+        if(localStorage.getItem('name') == null || localStorage.getItem('name') == 'null'){
             let name = prompt('請輸入暱稱')
             localStorage.setItem('name', name)
             this.name = name
