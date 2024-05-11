@@ -1,3 +1,7 @@
+#app{
+    overflow: hidden;
+}
+
 .admin {
     font-size: 15px;
     padding: 10px 10px;
@@ -31,9 +35,16 @@ span {
 }
 textarea {
     resize: none; 
+    background-color: rgb(60, 60, 60);
+    color: white;
 }
 button {
     height: 10%;
     width: 30%;
     border-radius: 100px
+}
+
+body {
+    background-color: rgb(110, 110, 110);
+    margin: 0;
 }

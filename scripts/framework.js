@@ -24,10 +24,6 @@ var v = new Vue({
     },
     methods: {
         send: function(){
-            if(this.msg.search('228922') != -1){
-                this.text = '委任你是不是沒被扁過'
-                this.msg = ""
-            }
             if(this.msg && !this.msg.match(/^\s+$/)){
                 let date = new Date()
                 let time = date.getHours()+'時'+date.getMinutes()+'分 '
