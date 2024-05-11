@@ -28,6 +28,7 @@
 }
 pre {
     position: relative;
+    overflow: scroll;
 }
 span {
     word-wrap: break-word;
