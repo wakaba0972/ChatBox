@@ -26,8 +26,7 @@ var v = new Vue({
     methods: {
         send: function(){
             if(this.msg && !this.msg.match(/^\s+$/)){
-                let date = new Date()
-                let time = date.getHours()+'時'+date.getMinutes()+'分 '
+                let time = new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei', hour: "2-digit", minute: "2-digit"});
                 ws.send(JSON.stringify({command: "message", time: time, id: this.id, name: this.name, msg: this.msg}))
                 this.msg = ""
             }

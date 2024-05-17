@@ -30,8 +30,7 @@ wsApp.on('connection', ws=> {
             case "connect":
                 ws.name = res.name 
                 clientList[ws.id] = ws
-                let date = new Date()
-                let time = date.getHours()+'時'+date.getMinutes()+'分 '
+                let time = new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei', hour: "2-digit", minute: "2-digit"});
 
                 ws.send(JSON.stringify({command: 'id', id: ws.id}))
                 wsApp.clients.forEach((client) => {
@@ -63,8 +62,7 @@ wsApp.on('connection', ws=> {
 
     ws.on('close', (e)=> {
         delete clientList.ws
-        let date = new Date()
-        let time = date.getHours()+'時'+date.getMinutes()+'分 '
+        let time = new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei', hour: "2-digit", minute: "2-digit"});
         wsApp.clients.forEach((client) => {
             client.send(JSON.stringify({command: "connection", time: time, name: "BOT", num: wsApp.clients.size, msg: ws.name + "君 離開聊天室"}))
         })
