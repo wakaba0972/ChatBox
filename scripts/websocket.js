@@ -12,15 +12,18 @@ ws.addEventListener('message', (res)=> {
     switch(data.command){
         case "regular":
             break
+
         case "id":
             v.id = data.id
             break
+
         case "enter":
             document.title = "在線人數: " + data.num
+
         case "message":
-            let msgArea = document.createElement('pre')
-            let msgHeader = document.createElement('strong')
-            let msgText = document.createElement('span')
+            var msgArea = document.createElement('pre')
+            var msgHeader = document.createElement('strong')
+            var msgText = document.createElement('span')
 
             if(data.isAuthor == 1){
                 msgArea.setAttribute('class', 'me')
@@ -44,6 +47,27 @@ ws.addEventListener('message', (res)=> {
             msgBox.appendChild(msgArea)
             msgBox.scrollTo(0, msgBox.scrollHeight);
             break
+
+        case "connection":
+            document.title = "在線人數: " + data.num
+            
+            var msgArea = document.createElement('pre')
+            var msgHeader = document.createElement('strong')
+            var msgText = document.createElement('span')
+
+            msgArea.setAttribute('class', 'bot')
+
+            msgHeader.innerText = data.name + ' 於 ' + data.time + '發表:\n'
+            msgText.innerText = data.msg + '\n'
+
+            msgArea.appendChild(msgHeader)
+            msgArea.appendChild(msgText)
+            msgBox.appendChild(msgArea)
+            msgBox.scrollTo(0, msgBox.scrollHeight);
+            break;
+
+        default:
+            break;
     }
 })
 
