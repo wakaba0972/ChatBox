@@ -28,6 +28,7 @@
 }
 pre {
     position: relative;
+    margin: 1%;
 }
 span {
     word-wrap: break-word;
