@@ -48,3 +48,8 @@ body {
     background-color: rgb(110, 110, 110);
     margin: 0;
 }
+
+::-webkit-scrollbar {
+    width: 0;  
+    background: transparent; 
+}
